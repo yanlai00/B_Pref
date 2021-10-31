@@ -96,7 +96,7 @@ class Workspace(object):
                 with utils.eval_mode(self.agent):
                     action = self.agent.act(obs, sample=False)
                 obs, reward, done, extra = self.env.step(action)
-                
+                reward = reward / 10.0 
                 episode_reward += reward
                 true_episode_reward += reward
                 if self.log_success:
@@ -291,6 +291,7 @@ class Workspace(object):
                                             gradient_update=1, K=self.cfg.topK)
                 
             next_obs, reward, done, extra = self.env.step(action)
+            reward = reward/10.0
             reward_hat = self.reward_model.r_hat(np.concatenate([obs, action], axis=-1))
 
             # allow infinite bootstrap
