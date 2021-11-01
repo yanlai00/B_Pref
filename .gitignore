@@ -48,6 +48,7 @@ src
 
 MUJOCO_LOG.TXT
 exp/*/*/*/*/*/*/tb
+# *.ipynb
 test_scripts/*
 *.pdf
 figures
