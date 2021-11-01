@@ -1,0 +1,35 @@
+!!python/object/apply:collections.OrderedDict
+- - - batch_size
+    - 64
+  - - clip_init
+    - 0.4
+  - - ent_coef
+    - 0.0
+  - - env
+    - walker_walk
+  - - gae_lambda
+    - 0.92
+  - - hidden_dim
+    - 256
+  - - lr
+    - 5.0e-05
+  - - n_envs
+    - 32
+  - - n_epochs
+    - 20
+  - - n_steps
+    - 500
+  - - normalize
+    - 1
+  - - num_layer
+    - 3
+  - - sde_freq
+    - 4
+  - - seed
+    - 12345
+  - - tensorboard_log
+    - logs/PPO/normalized_walker_walk/lr_5e-05_batch_64_nenvs_32_nsteps_500_ent_0.0_hidden_256_sde_1_sdefreq_4_gae_0.92_clip_0.4_nepochs_20_seed_12345
+  - - total_timesteps
+    - 4000000
+  - - use_sde
+    - 1
