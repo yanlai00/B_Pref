@@ -47,7 +47,7 @@ src
 *.prof
 
 MUJOCO_LOG.TXT
-exp/
+exp/*/*/*/*/*/*/tb
 *.ipynb
 test_scripts/*
 *.pdf
