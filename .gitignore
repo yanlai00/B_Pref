@@ -31,7 +31,7 @@ keys/
 
 .idea
 
-logs/
+logs/*/*/*/*/PPO_REWARD_1
 
 .ipynb_checkpoints
 ghostdriver.log
@@ -48,7 +48,7 @@ src
 
 MUJOCO_LOG.TXT
 exp/*/*/*/*/*/*/tb
-*.ipynb
+# *.ipynb
 test_scripts/*
 *.pdf
 figures
