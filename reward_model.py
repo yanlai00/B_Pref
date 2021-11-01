@@ -669,8 +669,8 @@ class RewardModel:
                 r_hat = torch.cat([r_hat1, r_hat2], axis=-1)
 
                 # compute loss
-                # curr_loss = self.CEloss(r_hat, labels)
-                curr_loss = self.belief_matching_loss(r_hat, labels)
+                curr_loss = self.CEloss(r_hat, labels)
+                # curr_loss = self.belief_matching_loss(r_hat, labels)
                 # print('Use belief_matching loss!')
                 loss += curr_loss
                 ensemble_losses[member].append(curr_loss.item())
