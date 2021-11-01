@@ -15,6 +15,35 @@ from scipy.stats import norm
 
 device = 'cuda'
 
+class BeliefMatchingLoss(torch.nn.Module):
+    def __init__(self, coeff, prior=1.):
+        super(BeliefMatchingLoss, self).__init__()
+        self.prior = prior
+        self.coeff = coeff
+        
+    def forward(self, logits, targets):
+        '''
+        Compute loss: kl - evi
+        
+        '''
+        alphas = torch.exp(logits) 
+        betas = torch.ones_like(logits) * self.prior
+        
+        # compute log-likelihood loss: psi(alpha_target) - psi(alpha_zero)
+        a_ans = torch.gather(alphas, -1, targets.unsqueeze(-1)).squeeze(-1)
+        a_zero = torch.sum(alphas, -1)
+        ll_loss = torch.digamma(a_ans) - torch.digamma(a_zero)
+        
+        loss1 = torch.lgamma(a_zero) - torch.sum(torch.lgamma(alphas), -1)
+        loss2 = torch.sum(
+            (alphas - betas) * (torch.digamma(alphas) - torch.digamma(a_zero.unsqueeze(-1))),
+        -1)
+        kl_loss = loss1 + loss2
+
+        loss = ((self.coeff*kl_loss - ll_loss)).mean()
+        
+        return loss 
+
 def gen_net(in_size=1, out_size=1, H=128, n_layers=3, activation='tanh'):
     net = []
     for i in range(n_layers):
@@ -120,6 +149,7 @@ class RewardModel:
         self.origin_mb_size = mb_size
         self.train_batch_size = 128
         self.CEloss = nn.CrossEntropyLoss()
+        self.belief_matching_loss = BeliefMatchingLoss(0.01)
         self.running_means = []
         self.running_stds = []
         self.best_seg = []
@@ -639,7 +669,9 @@ class RewardModel:
                 r_hat = torch.cat([r_hat1, r_hat2], axis=-1)
 
                 # compute loss
-                curr_loss = self.CEloss(r_hat, labels)
+                # curr_loss = self.CEloss(r_hat, labels)
+                curr_loss = self.belief_matching_loss(r_hat, labels)
+                # print('Use belief_matching loss!')
                 loss += curr_loss
                 ensemble_losses[member].append(curr_loss.item())
                 
