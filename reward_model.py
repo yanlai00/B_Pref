@@ -163,7 +163,7 @@ class RewardModel:
             self.ensemble.append(model)
             self.paramlst.extend(model.parameters())
             
-        self.opt = torch.optim.Adam(self.paramlst, lr = self.lr)
+        self.opt = torch.optim.Adam(self.paramlst, lr = self.lr, weight_decay=1e-5)
             
     def add_data(self, obs, act, rew, done):
         sa_t = np.concatenate([obs, act], axis=-1)
