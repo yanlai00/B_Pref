@@ -1,6 +1,0 @@
-[2021-11-01 11:04:21,252][absl][INFO] - MUJOCO_GL is not set, so an OpenGL backend will be chosen automatically.
-[2021-11-01 11:04:21,254][absl][INFO] - Failed to import OpenGL backend: glfw
-[2021-11-01 11:04:21,265][OpenGL.acceleratesupport][INFO] - No OpenGL_accelerate module loaded: No module named 'OpenGL_accelerate'
-[2021-11-01 11:04:21,306][absl][INFO] - Successfully imported OpenGL backend: egl
-[2021-11-01 11:04:21,427][absl][INFO] - MuJoCo library version is: 200
-[2021-11-01 11:04:22,080][hydra.utils][ERROR] - Error instantiating agent.sac.SACAgent : CUDA error: out of memory
